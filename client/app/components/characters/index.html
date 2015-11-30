@@ -1,2 +1,18 @@
-<h1>User: {{ vs.username }}</h1>
-<h1>Char: {{ vs.character.name }}</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1 class="panel-title">Characters</h1>
+				</div>
+				<div class="panel-body">
+					<ul class="character-list">
+						<li ng-repeat="char in player.characters" ng-click="selectCharacter(char)">
+							{{ char.name }}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

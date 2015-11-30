@@ -19,7 +19,7 @@ io.on('connection', function(socket) {
         console.log('user joined lobby: ' + username);
         socket.username = username;
         socket.join('lobby');
-        socket.emit('login', { username: username, character: testCharacter });
+        socket.emit('login', { characters: [testCharacter] });
         socket.to('lobby').emit('user joined', username);
     });
     

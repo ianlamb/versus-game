@@ -1,4 +1,4 @@
-angular.module('lobbyController', [])
+angular.module('lobby', [])
     .controller('LobbyController', function($scope) {
     'use strict';
 

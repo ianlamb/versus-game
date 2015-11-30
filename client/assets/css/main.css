@@ -8,6 +8,20 @@ html, body {
 	
 }
 
-#messages {
+.chat-messages {
 	list-style-type: none;
+	height: 300px;
+	overflow-y: scroll;
+}
+
+.character-list li {
+	list-style: none;
+	width: 100%;
+	padding: 10px 20px;
+	background: #efefef;
+	border: 1px solid #ccc;
+}
+.character-list li:hover {
+	cursor: pointer;
+	background: #d6d6d6;
 }

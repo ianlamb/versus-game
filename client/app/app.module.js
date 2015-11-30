@@ -1,6 +1,8 @@
 var vs = angular.module('versusApp', [
     'routes',
-    'loginController',
-    'charactersController',
-    'lobbyController'
+    'navbar',
+    'chat',
+    'login',
+    'characters',
+    'lobby'
 ])
