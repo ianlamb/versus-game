@@ -4,5 +4,6 @@ var vs = angular.module('versusApp', [
     'chat',
     'login',
     'characters',
-    'lobby'
+    'lobby',
+    'versus'
 ])

@@ -25,3 +25,8 @@ html, body {
 	cursor: pointer;
 	background: #d6d6d6;
 }
+
+#vsCanvas {
+	margin-left: calc(50% - 400px);
+	border: 1px solid #ccc;
+}

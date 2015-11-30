@@ -1,0 +1,16 @@
+{
+  "name": "versus-game",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ianlamb/versus-game",
+  "authors": [
+    "Ian Lamb <ianlamb32@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

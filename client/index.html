@@ -16,42 +16,19 @@
         <div class="page" ui-view></div>
     </div>
     
-<!--    
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          
-          <div id="game" class="panel panel-default">
-            <div class="panel-heading">
-              <h1 class="panel-title">Game</h1>
-            </div>
-            <div class="panel-body">
-              <dl>
-                <dt>User</dt>
-                <dd id="user"></dd>
-                <dt>Character</dt>
-                <dd id="character"></dd>
-              </dl>
-              <button type="button" class="btn btn-primary" data-action="play">Play</button>
-            </div>
-          </div>
-    
-          
-        </div>
-      </div>
-    </div>-->
-    
     <script src="/jquery/dist/jquery.min.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/angular/angular.min.js"></script>
     <script src="/angular-ui-router/build/angular-ui-router.min.js"></script>
+    <script src="/easeljs/lib/easeljs-0.8.1.min.js"></script>
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
     <script src="app/shared/navbar/directive.js"></script>
     <script src="app/shared/chat/directive.js"></script>
-    <script src="app/components/login/controller.js"></script>
-    <script src="app/components/characters/controller.js"></script>
-    <script src="app/components/lobby/controller.js"></script>
+    <script src="app/components/login/login.js"></script>
+    <script src="app/components/characters/characters.js"></script>
+    <script src="app/components/lobby/lobby.js"></script>
+    <script src="app/components/versus/versus.js"></script>
   </body>
 </html>

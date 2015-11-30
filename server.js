@@ -13,6 +13,7 @@ var testCharacter = {
 
 var findingMatch = [];
 
+
 io.on('connection', function(socket) {
     
     socket.on('add user', function(username) {
@@ -52,12 +53,14 @@ io.on('connection', function(socket) {
     });
 });
 
-app.get('/', function(req, res) {
-    res.sendFile('index.html', { root: __dirname + '/client' });
-});
 
 app.use(express.static(__dirname + '/client'));
 app.use(express.static(__dirname + '/node_modules'));
+app.use(express.static(__dirname + '/bower_components'));
+
+app.get('*', function(req, res) {
+    res.sendFile('index.html', { root: __dirname + '/client' });
+});
 
 http.listen(1337, function() {
     console.log('Listening on port 1337');
