@@ -47,10 +47,11 @@ angular.module('versus', [])
     stage.height = document.getElementById('vsCanvas').clientHeight;
     
     var pendulum = new createjs.Shape();
-    pendulum.width = 10;
+    pendulum.width = 5;
     pendulum.height = 120;
     pendulum.direction = 1;
-    pendulum.speed = 10;
+    pendulum.baseSpeed = 10;
+    pendulum.speed = pendulum.baseSpeed;
     pendulum.y = stage.height - pendulum.height;
     pendulum.graphics.beginFill('blue').drawRect(0, 0, pendulum.width, pendulum.height);
     
@@ -85,11 +86,14 @@ angular.module('versus', [])
             // hit!
             if (hitValue > 0) {
                 score += hitValue;
-                scoreText.text = 'Score: ' + score;
+                scoreText.text = 'Score: ' + Math.floor(score);
                 recoil += recoilRate;
             }
             allowedToAttack = false;
         }
+        
+        // set pendulum speed based on recoil
+        pendulum.speed = pendulum.baseSpeed + (recoil / 5);
         
         // move pendulum
         pendulum.x += (pendulum.speed * pendulum.direction);
@@ -105,10 +109,10 @@ angular.module('versus', [])
             recoil -= recoilRecoveryRate;
         }
         
-        // set width based on recoil
+        // set target width based on recoil
         target.graphics.command.w += (target.baseWidth - target.graphics.command.w - recoil) / 2;
         
-        // recoil min/max
+        // min/max
         if (target.graphics.command.w < target.minWidth) {
             target.graphics.command.w = target.minWidth;
             recoil = target.width - target.minWidth;
@@ -118,7 +122,7 @@ angular.module('versus', [])
         }
         
         // center target
-        target.graphics.command.x = 0;// stage.width / 2 - target.graphics.command.w / 2;
+        target.x = stage.width / 2 - target.graphics.command.w / 2;
         
         stage.update();
     }
