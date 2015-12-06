@@ -1,19 +1,21 @@
 <div class="container">
-	<div class="row">
-		<div class="col-md-8">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h1 class="panel-title">Play</h1>
-				</div>
-				<div class="panel-body">
-					<form ng-submit="findMatch()">
-						<button type="submit" class="btn btn-primary btn-block">Find Match</button>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<chat></chat>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Play</h1>
+                </div>
+                <div class="panel-body">
+                    <form ng-submit="findMatch()">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            {{ findingMatch ? 'Searching...' : 'Find Match' }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <chat></chat>
+        </div>
+    </div>
 </div>

@@ -1,3 +1,10 @@
-<canvas id="vsCanvas" width="800px" height="600px">
-	Your browser doesn't support canvas. Please download IE9+ on <a href="http://ie.microsoft.com/testdrive">IE Test Drive</a> 
+<div>{{ match }}</div>
+
+<canvas ng-show="match.inProgress" id="vsCanvas" width="640px" height="480px">
+    Your browser doesn't support canvas. Please download IE9+ on <a href="http://ie.microsoft.com/testdrive">IE Test Drive</a> 
 </canvas>
+
+<div ng-hide="match.inProgress">
+    {{ gameResults() }}
+    <button ng-click="toLobby()" class="btn btn-default btn-xs">Return to Lobby</button>
+</div>

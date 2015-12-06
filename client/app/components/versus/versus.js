@@ -1,6 +1,25 @@
 angular.module('versus', [])
-    .controller('VersusController', function($scope) {
+    .controller('VersusController', function($scope, $rootScope, $location) {
     'use strict';
+    
+    $rootScope.socket.on('match update', function(match) {
+        $rootScope.match = match;
+        $scope.$apply();
+    });
+    
+    $scope.toLobby = function() {
+        $location.path('/lobby');
+    };
+    
+    $scope.gameResults = function() {
+        if (!$rootScope.match.inProgress) {
+            if ($rootScope.match.winner.name === $rootScope.player.name) {
+                return 'You won!';
+            } else if ($rootScope.match.loser.name === $rootScope.player.name) {
+                return 'You lost!';
+            }
+        }
+    };
     
     var Key = {
         _pressed: [],
@@ -85,15 +104,19 @@ angular.module('versus', [])
             }
             // hit!
             if (hitValue > 0) {
-                score += hitValue;
-                scoreText.text = 'Score: ' + Math.floor(score);
+                var data = {
+                    'matchId': $rootScope.match.id,
+                    'playerId': $rootScope.player.id,
+                    'damage': Math.floor(hitValue)
+                };
+                $rootScope.socket.emit('attack', data);
                 recoil += recoilRate;
             }
             allowedToAttack = false;
         }
         
         // set pendulum speed based on recoil
-        pendulum.speed = pendulum.baseSpeed + (recoil / 5);
+        pendulum.speed = pendulum.baseSpeed + (recoil / 10);
         
         // move pendulum
         pendulum.x += (pendulum.speed * pendulum.direction);

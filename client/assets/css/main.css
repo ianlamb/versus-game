@@ -27,6 +27,6 @@ html, body {
 }
 
 #vsCanvas {
-	margin-left: calc(50% - 400px);
+	margin-left: calc(50% - 320px);
 	border: 1px solid #ccc;
 }
