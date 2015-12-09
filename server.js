@@ -5,17 +5,8 @@ var io = require('socket.io')(http);
 var Match = require('./game/match');
 var Player = require('./game/player');
 
-var testCharacter = {
-    "name": "Uther",
-    "level": 1,
-    "xp": 0,
-    "health": 100,
-    "damage": 10
-}
-
 var findingMatch = [];
-var currentMatches = [];
-
+var matches = [];
 
 io.on('connection', function(socket) {
     
@@ -43,39 +34,48 @@ io.on('connection', function(socket) {
             var p1 = findingMatch.pop();
             var p2 = findingMatch.pop();
             var newMatch = new Match(p1, p2);
-            currentMatches.push(newMatch);
+            matches.push(newMatch);
             console.log('found match for %s and %s', p1.name, p2.name);
             io.sockets.in('lobby').emit('found match', newMatch);
         }
     });
     
     socket.on('attack', function(data) {
-        var match;
-        currentMatches.some(function(_match) {
-            if (data.matchId === _match.id) {
-                match = _match;
-                return;
-            }
-        });
+        var match = getMatch(data.matchId);
         if (match.p1.id === data.playerId) {
             match.p2.character.health -= data.damage;
+            console.log('player %s attacked player %s for %s damage', match.p1.name, match.p2.name, data.damage);
             if (match.p2.character.health <= 0) {
                 match.p2.character.health = 0;
                 match.inProgress = false;
                 match.winner = match.p1;
                 match.loser = match.p2;
+                console.log('match end, player %s wins, player %s loses', match.p1.name, match.p2.name);
             }
         } else if (match.p2.id === data.playerId) {
             match.p1.character.health -= data.damage;
+            console.log('player %s attacked player %s for %s damage', match.p2.name, match.p1.name, data.damage);
             if (match.p1.character.health <= 0) {
                 match.p1.character.health = 0;
                 match.inProgress = false;
                 match.winner = match.p2;
                 match.loser = match.p1;
+                console.log('match end, player %s wins, player %s loses', match.p2.name, match.p1.name);
             }
         }
         io.sockets.in('lobby').emit('match update', match);
     });
+    
+    function getMatch(id) {
+        var match;
+        matches.some(function(_match) {
+            if (id === _match.id) {
+                match = _match;
+                return;
+            }
+        });
+        return match;
+    }
     
     socket.on('disconnect', function() {
         console.log('socket disconnect');

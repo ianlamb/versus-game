@@ -11,7 +11,7 @@
   </head>
   <body>
     
-    <div ng-app="versusApp">
+    <div ng-app="versusApp" ng-controller="mainController">
         <navbar></navbar>
         <div class="page" ui-view></div>
     </div>
@@ -24,6 +24,7 @@
     <script src="https://code.createjs.com/easeljs-0.8.1.min.js"></script>
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
+    <script src="app/app.controller.js"></script>
     <script src="app/shared/navbar/directive.js"></script>
     <script src="app/shared/chat/directive.js"></script>
     <script src="app/components/login/login.js"></script>
