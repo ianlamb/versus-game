@@ -6,4 +6,4 @@ var vs = angular.module('versusApp', [
     'characters',
     'lobby',
     'versus'
-])
+]);

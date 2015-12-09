@@ -5,7 +5,8 @@
 }
 
 html, body {
-	
+	background: #444;
+	color: #f6f6f6;
 }
 
 .chat-messages {
@@ -28,5 +29,7 @@ html, body {
 
 #vsCanvas {
 	margin-left: calc(50% - 320px);
-	border: 1px solid #ccc;
+	border: 1px solid #333;
+	background: #666;
+	box-shadow: 0 5px 20px rgba(0,0,0,.2);
 }
