@@ -84,7 +84,7 @@ angular.module('versus', [])
     pendulum.direction = 1;
     pendulum.baseSpeed = 5;
     pendulum.speed = pendulum.baseSpeed;
-    pendulum.graphics.beginFill('rgba(0,180,255,1)').drawRect(0, 0, pendulum.width, pendulum.height);
+    pendulum.graphics.beginFill('rgba(0,180,255,1)').beginStroke('rgba(0,120,235,1)').drawRect(0, 0, pendulum.width, pendulum.height);
     
     var pendulumShadow = new createjs.Shape();
     pendulumShadow.width = pendulum.width;
@@ -106,60 +106,86 @@ angular.module('versus', [])
     pendulumContainer.addChild(pendulumBackground, target, pendulumShadow, pendulum);
     
     // player 1
-    var p1Name = new createjs.Text($rootScope.match.p1.name);
-    p1Name.color = '#fff';
-    
-    var p1HealthContainer = new createjs.Shape();
-    p1HealthContainer.width = 104;
-    p1HealthContainer.height = 24;
-    p1HealthContainer.y = 20;
-    p1HealthContainer.graphics.beginFill('rgba(0,0,0,0.5)').drawRect(0, 0, p1HealthContainer.width, p1HealthContainer.height);
-    
-    var p1Health = new createjs.Shape();
-    p1Health.height = 20;
-    p1Health.x = 2;
-    p1Health.y = 22;
-    p1Health.graphics.beginFill('rgba(0,180,255,1)').drawRect(0, 0, $rootScope.match.p1.character.health, p1Health.height);
-    
     var p1Container = new createjs.Container();
     p1Container.x = 20;
     p1Container.y = 20;
     p1Container.skewY = -3;
     p1Container.skewX = 10;
-    p1Container.addChild(p1Name, p1HealthContainer, p1Health);
+    
+    var p1Name = new createjs.Text($rootScope.match.p1.name);
+    p1Name.color = '#fff';
+    p1Name.scaleX = p1Name.scaleY = 1.5;
+    
+    var p1HealthBackground = new createjs.Shape();
+    p1HealthBackground.width = 104;
+    p1HealthBackground.height = 24;
+    p1HealthBackground.y = 20;
+    p1HealthBackground.graphics.beginFill('rgba(0,0,0,0.5)').drawRect(0, 0, p1HealthBackground.width, p1HealthBackground.height);
+    
+    var p1HealthBar = new createjs.Shape();
+    p1HealthBar.height = 20;
+    p1HealthBar.x = 2;
+    p1HealthBar.y = 22;
+    p1HealthBar.graphics.beginFill('rgba(0,180,255,1)').drawRect(0, 0, $rootScope.match.p1.character.health, p1HealthBar.height);
+    
+    var p1HealthLabel = new createjs.Text();
+    p1HealthLabel.text = $rootScope.match.p1.character.health + '%';
+    p1HealthLabel.color = '#fff';
+    p1HealthLabel.y = p1HealthBar.y + 3;
+    p1HealthLabel.x = p1HealthBar.x + 5;
+    
+    p1Container.addChild(p1Name, p1HealthBackground, p1HealthBar, p1HealthLabel);
     
     // player 2
-    var p2Name = new createjs.Text($rootScope.match.p2.name);
-    p2Name.color = '#fff';
-    
-    var p2HealthContainer = new createjs.Shape();
-    p2HealthContainer.width = 104;
-    p2HealthContainer.height = 24;
-    p2HealthContainer.y = 20;
-    p2HealthContainer.graphics.beginFill('rgba(0,0,0,0.5)').drawRect(0, 0, p2HealthContainer.width, p2HealthContainer.height);
-    
-    var p2Health = new createjs.Shape();
-    p2Health.height = 20;
-    p2Health.x = 2;
-    p2Health.y = 22;
-    p2Health.graphics.beginFill('rgba(0,180,255,1)').drawRect(0, 0, $rootScope.match.p2.character.health, p2Health.height);
-    
     var p2Container = new createjs.Container();
     p2Container.width = 110;
     p2Container.x = stage.width - p2Container.width - 20;
     p2Container.y = 20;
     p2Container.skewY = 3;
     p2Container.skewX = -10;
-    p2Container.addChild(p2Name, p2HealthContainer, p2Health);
     
-    stage.addChild(p1Container, p2Container, pendulumContainer);
+    var p2Name = new createjs.Text($rootScope.match.p2.name);
+    p2Name.color = '#fff';
+    p2Name.scaleX = p2Name.scaleY = 1.5;
+    
+    var p2HealthBackground = new createjs.Shape();
+    p2HealthBackground.width = 104;
+    p2HealthBackground.height = 24;
+    p2HealthBackground.y = 20;
+    p2HealthBackground.graphics.beginFill('rgba(0,0,0,0.5)').drawRect(0, 0, p2HealthBackground.width, p2HealthBackground.height);
+    
+    var p2HealthBar = new createjs.Shape();
+    p2HealthBar.height = 20;
+    p2HealthBar.x = 2;
+    p2HealthBar.y = 22;
+    p2HealthBar.graphics.beginFill('rgba(0,180,255,1)').drawRect(0, 0, $rootScope.match.p2.character.health, p2HealthBar.height);
+    
+    var p2HealthLabel = new createjs.Text();
+    p2HealthLabel.text = $rootScope.match.p2.character.health + '%';
+    p2HealthLabel.color = '#fff';
+    p2HealthLabel.y = p2HealthBar.y + 3;
+    p2HealthLabel.x = p2HealthBar.x + p2HealthBar.graphics.command.w - 30;
+    
+    p2Container.addChild(p2Name, p2HealthBackground, p2HealthBar, p2HealthLabel);
+    
+    // misc
+    var attackLabel = new createjs.Text();
+    attackLabel.y = stage.height - pendulumContainer.height - 30;
+    attackLabel.color = '#fff';
+    attackLabel.textAlign = 'center';
+    attackLabel.alpha = 0;
+    attackLabel.scaleX = attackLabel.scaleY = 2;
+    
+    stage.addChild(p1Container, p2Container, pendulumContainer, attackLabel);
     stage.update();
     
     if ($rootScope.socket) {
         $rootScope.socket.on('match update', function(match) {
             $rootScope.match = match;
-            p1Health.graphics.command.w = $rootScope.match.p1.character.health;
-            p2Health.graphics.command.w = $rootScope.match.p2.character.health;
+            p1HealthBar.graphics.command.w = $rootScope.match.p1.character.health;
+            p2HealthBar.graphics.command.w = $rootScope.match.p2.character.health;
+            p1HealthLabel.text = $rootScope.match.p1.character.health + '%';
+            p2HealthLabel.text = $rootScope.match.p2.character.health + '%';
             $scope.$apply();
         });
         
@@ -174,7 +200,9 @@ angular.module('versus', [])
         };
     }
     
-    function tick() {
+    function tick(event) {
+        var time = event.delta / 1000;
+        
         // attack
         if (allowedToAttack && Key.isDown(Key.SPACE)) {
             pendulumShadow.x = pendulum.x;
@@ -186,19 +214,25 @@ angular.module('versus', [])
             if (hitValue > (target.graphics.command.w / 2)) {
                 hitValue = (target.graphics.command.w / 2) - (hitValue - (target.graphics.command.w / 2));
             }
+            
             // hit!
             if (hitValue > 0) {
-                hitValue = (hitValue + 100) / 10;
+                hitValue = Math.floor((hitValue + 100) / 10);
                 var data = {
                     'matchId': $rootScope.match.id,
                     'playerId': $rootScope.player.id,
-                    'damage': Math.floor(hitValue)
+                    'damage': hitValue
                 };
                 if ($rootScope.socket) {
                     $rootScope.socket.emit('attack', data);
                 }
                 recoil += recoilRate;
+                attackLabel.text = hitValue;
+            } else {
+                attackLabel.text = 'Miss!';
             }
+            attackLabel.x = pendulum.x - (attackLabel.lineWidth / 2);
+            attackLabel.alpha = 1;
             allowedToAttack = false;
         }
         
@@ -206,7 +240,7 @@ angular.module('versus', [])
         pendulum.speed = pendulum.baseSpeed + (recoil / 10);
         
         // move pendulum
-        pendulum.x += (pendulum.speed * pendulum.direction);
+        pendulum.x += time * (pendulum.speed * 60 * pendulum.direction);
         
         // it pendulum hits a wall reverse it and reset attack
         if (pendulum.x <= 0 || (pendulum.x + pendulum.width) >= stage.width) {
@@ -237,6 +271,11 @@ angular.module('versus', [])
         // fade pendulum shadow
         if (pendulumShadow.alpha > 0) {
             pendulumShadow.alpha -= 0.01;
+        }
+        
+        // fade attack label
+        if (attackLabel.alpha > 0) {
+            attackLabel.alpha -= 0.02;
         }
         
         stage.update();

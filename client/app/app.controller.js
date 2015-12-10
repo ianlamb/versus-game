@@ -4,7 +4,7 @@ angular.module('versusApp')
         'use strict';
     
         if (!$rootScope.player) {
-            $location.path('/');
+            //$location.path('/');
         }
     
     });
