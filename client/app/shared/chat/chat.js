@@ -5,7 +5,7 @@ angular.module('chat', [])
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'app/shared/chat/view.html',
+            templateUrl: 'app/shared/chat/chat.html',
             controller: function($scope, $rootScope) {
                 $scope.messages = [];
                 

@@ -88,12 +88,11 @@ io.on('connection', function(socket) {
 });
 
 
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/dist/client'));
 app.use(express.static(__dirname + '/node_modules'));
-app.use(express.static(__dirname + '/bower_components'));
 
 app.get('*', function(req, res) {
-    res.sendFile('index.html', { root: __dirname + '/client' });
+    res.sendFile('index.html', { root: __dirname + '/dist/client' });
 });
 
 http.listen(1337, function() {
